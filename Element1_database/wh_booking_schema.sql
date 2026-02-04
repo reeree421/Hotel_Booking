@@ -1,6 +1,5 @@
-
-
 -- Users Table
+-- Stores system users i.e, customers admins giving access in role-based
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -11,6 +10,7 @@ CREATE TABLE users (
 );
 
 -- Hotels Table
+-- Stores hotel locations and seasonal pricing details
 CREATE TABLE hotels (
     id INT AUTO_INCREMENT PRIMARY KEY,
     city VARCHAR(100) NOT NULL,
@@ -20,6 +20,7 @@ CREATE TABLE hotels (
 );
 
 -- Rooms Table
+-- Stores rooms linked to hotels and tracks availability
 CREATE TABLE rooms (
     id INT AUTO_INCREMENT PRIMARY KEY,
     hotel_id INT NOT NULL,
@@ -30,6 +31,7 @@ CREATE TABLE rooms (
 );
 
 -- Bookings Table
+-- Stores rooms linked to hotels and tracks availability
 CREATE TABLE bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -47,6 +49,7 @@ CREATE TABLE bookings (
 );
 
 -- Currencies Table
+-- Stores supported currencies for price conversion
 CREATE TABLE currencies (
     id INT AUTO_INCREMENT PRIMARY KEY,
     code VARCHAR(5),
@@ -54,6 +57,7 @@ CREATE TABLE currencies (
 );
 
 -- Exchange Rates Table
+-- Stores exchange rates relative to GBP
 CREATE TABLE IF NOT EXISTS exchange_rates (
     currency_code VARCHAR(3) PRIMARY KEY,
     rate_to_gbp FLOAT NOT NULL
