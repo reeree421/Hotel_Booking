@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block main %}
+<!-- 
+    CHECKOUT PAGE
+    - Displays final payment summary
+    - Confirms payment before marking booking as Paid
+    Simulates a secure payment environment
+-->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-white py-3 text-center border-bottom">
+                    <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" height="50" alt="PayPal">
+                </div>
+                <div class="card-body p-5">
+                    <h4 class="text-center mb-4">Secure Checkout</h4>
+                    
+                    <div class="bg-light p-3 rounded mb-4">
+                        <div class="d-flex justify-content-between small">
+                            <span>Booking Reference:</span>
+                            <span class="fw-bold">WH-{{ booking.id }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between h5 mt-2">
+                            <span>Total Amount:</span>
+                            <span class="fw-bold">£{{ "%.2f"|format(booking.total_price - booking.discount_amount) }}</span>
+                        </div>
+                    </div>
+
+                    <p class="text-muted small mb-4">
+                        <i class="bi bi-shield-lock"></i> Your connection is encrypted. This is a demonstration payment environment.
+                    </p>
+
+                    <form action="{{ url_for('pay', id=booking.id) }}" method="POST">
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold py-3 shadow">
+                            Complete Payment
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('user_dashboard') }}" class="text-muted small">Cancel and return to dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

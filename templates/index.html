@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block main %}
+<!--
+    HOME PAGE
+    - Page Displays hotel branches and room listings
+    - Page Allows users to search and book hotels
+    - It Acts as main entry to system
+-->
+
+<!-- 1. MOVING CAROUSEL BANNER -->
+<div id="hotelCarousel" class="carousel slide carousel-fade shadow-lg" data-bs-ride="carousel">
+    <!-- Loop through all hotels and create a carousel slide -->
+    <div class="carousel-inner">
+        {% for h in hotels %}
+        <!-- Single hotel slide -->
+        <div class="carousel-item {% if loop.first %}active{% endif %}" data-bs-interval="4000">
+            <!-- Clickable hotel banner -->
+            <div class="position-relative" style="height: 550px; cursor: pointer;" onclick="selectHotel('{{ h.id }}')">
+                <!-- Hotel image -->
+                <img src="{{ url_for('static', filename='images/' + h.city + '.jpg') }}" 
+                     class="d-block w-100 h-100"
+                     style="object-fit: cover; filter: brightness(0.65);"
+                     onerror="this.src='{{ url_for('static', filename='images/banner.jpg') }}'">
+
+                <div class="carousel-caption d-none d-md-block" style="bottom: 30%;">
+                    <h1 class="display-3 fw-bold" style="font-family: 'Playfair Display', serif;">{{ h.city }}</h1>
+                    <p class="lead h4">Luxury stays from £{{ h.off_peak_rate }} per night.</p>
+                    <span class="btn btn-warning px-5 rounded-pill fw-bold mt-3">Discover This Branch</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#hotelCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#hotelCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- 2. SEARCH SECTION  -->
+<div class="container" style="margin-top: -80px; position: relative; z-index: 1000;">
+    <div class="card shadow-lg border-0" style="border-radius: 20px;">
+        <div class="card-body p-4 p-lg-5">
+            <h4 class="text-center mb-4 fw-bold" id="search-title" style="color: #1b3a31;">Find Your Perfect Stay</h4>
+            <!-- Booking search form -->
+            <form action="{{ url_for('search') }}" method="POST" class="row g-3 align-items-end">
+                <!-- Hotel selection dropdown -->
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Destination</label>
+                    <select name="hotel_id" class="form-select border-0 bg-light py-2" id="hotel-selector">
+                        {% for h in hotels %}
+                        <option value="{{ h.id }}">{{ h.city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Check In</label>
+                    <input type="date" name="check_in" class="form-control border-0 bg-light py-2" required>
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Check Out</label>
+                    <input type="date" name="check_out" class="form-control border-0 bg-light py-2" required>
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Guests</label>
+                    <div class="input-group">
+                        <input type="number" name="guests" min="1" max="4" value="1" class="form-control border-0 bg-light py-2">
+                        <select name="currency" class="form-select border-0 bg-light py-2">
+                            <option value="GBP">£</option>
+                            <option value="EUR">€</option>
+                            <option value="USD">$</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-12 mt-4">
+                    <button type="submit" class="btn btn-dark w-100 py-3 fw-bold shadow" style="background-color: #1b3a31; border-radius: 10px;">
+                        RESERVE YOUR STAY
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 3. LUXURY HOTEL GRID -->
+<div class="container mt-5 pt-4">
+    <div class="text-center mb-5">
+        <p class="text-warning text-uppercase letter-spacing fw-bold mb-1">Our Portfolio</p>
+        <h2 class="display-5 fw-bold" style="color: #1b3a31;">Luxury Rooms & Suites</h2>
+    </div>
+
+    <div class="row">
+        {% for h in hotels %}
+        <!-- Individual hotel card -->
+        <div class="col-md-4 mb-4">
+            <div class="card luxury-card h-100 border-0 shadow-sm">
+                <div class="img-wrapper position-relative" style="overflow: hidden; border-radius: 15px 15px 0 0;">
+                    <span class="badge bg-primary position-absolute top-0 start-0 m-3" style="z-index: 5;">5 Star Luxury</span>
+                    <!-- Hotel image -->
+                    <img src="{{ url_for('static', filename='images/' + h.city + '.jpg') }}" 
+                         class="card-img-top" 
+                         alt="{{ h.city }}"
+                         style="height: 250px; object-fit: cover; transition: 0.3s;"
+                         onerror="this.src='{{ url_for('static', filename='images/banner.jpg') }}'">
+                </div>
+
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="card-price mb-0 fw-bold">£{{ h.off_peak_rate }}<small class="text-muted" style="font-size: 0.6em;">/night</small></h4>
+                        <span class="text-warning small">
+                            <i class="bi bi-star-fill"></i> 4.9
+                        </span>
+                    </div>
+                    
+                    <h5 class="card-title fw-bold" style="font-family: 'Playfair Display', serif;">{{ h.city }} Grand Hotel</h5>
+                    
+                    <div class="d-flex justify-content-between mt-3 text-muted small">
+                        <span><i class="bi bi-people"></i> 1-4 Guests</span>
+                        <span><i class="bi bi-wifi"></i> Free Wifi</span>
+                        <span><i class="bi bi-snow"></i> A/C</span>
+                    </div>
+                    
+                    <hr class="opacity-10">
+
+                    <div class="text-center">
+                        <button onclick="selectHotel('{{ h.id }}')" class="btn btn-outline-dark btn-sm rounded-pill px-4">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function selectHotel(id) {
+    // Select hotel in dropdown automatically
+    const selector = document.getElementById('hotel-selector');
+    selector.value = id;
+
+    // Scrolling smoothly to the search form
+    document.getElementById('search-title').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // highlight effect
+    const cardBody = selector.closest('.card-body');
+    cardBody.style.backgroundColor = '#fff9e6';
+    setTimeout(() => cardBody.style.backgroundColor = '#fff', 1000);
+}
+</script>
+{% endblock %}

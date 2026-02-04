@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page title -->
+    <title>World Hotels | Luxury Stays</title>
+    
+    <!-- Bootstrap CSS framework -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons (Needed for footer and star icons) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom site stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    
+    <!-- Navbar  -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #1b3a31;">
+        <div class="container">
+            <!-- Brand logo -->
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="90" class="me-2">
+                <span style="letter-spacing: 2px; font-weight: 700; font-family: 'Playfair Display', serif;">WORLD HOTELS</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Navigation links -->
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    {% if session.get('loggedin') %}
+                        <a class="nav-link" href="{{ url_for('user_dashboard') }}">My Dashboard</a>
+                        <a class="nav-link text-warning" href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        <a class="nav-link btn btn-outline-light ms-2 px-3 text-white" href="{{ url_for('register') }}">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Generic Header for Sub-Pages -->
+{% if request.endpoint != 'index' %}
+<div class="sub-page-header mb-4" style="height: 200px; position: relative; overflow: hidden;">
+    <img src="{{ url_for('static', filename='images/banner.jpg') }}" 
+         style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5);">
+    <div class="position-absolute top-50 start-50 translate-middle text-white text-center">
+        <h2 class="fw-bold text-uppercase" style="letter-spacing: 3px; font-family: 'Playfair Display', serif;">
+            {% if request.endpoint == 'login' %}Guest Login
+            {% elif request.endpoint == 'register' %}Join World Hotels
+            {% elif request.endpoint == 'user_dashboard' %}My Account
+            {% elif request.endpoint == 'receipt' %}Booking Receipt
+            {% elif request.endpoint == 'admin_dashboard' %}Management Console
+            {% else %}World Hotels Luxury{% endif %}
+        </h2>
+    </div>
+</div>
+{% endif %}
+
+    <!-- Main Content Area -->
+    <div class="content-wrapper">
+        <!-- Flash Messages -->
+        <div class="container mt-3">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info shadow-sm">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        {% block main %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+        <footer class="site-footer pt-5 pb-3 mt-5">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold border-bottom border-secondary pb-2">WORLD HOTELS</h5>
+                    <p class="small text-muted">Experience the pleasure of extravagant and peaceful stays across itineries of the United Kingdom.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold border-bottom border-secondary pb-2">Quick Links</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="/" class="text-muted text-decoration-none">Search Rooms</a></li>
+                        <li><a href="/login" class="text-muted text-decoration-none">Login</a></li>
+                        <li><a href="/register" class="text-muted text-decoration-none">Register</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold border-bottom border-secondary pb-2">Contact Us</h5>
+                    <p class="small text-muted">
+                        <i class="bi bi-geo-alt"></i> 458 Stella Street, London, UK<br>
+                        <i class="bi bi-envelope"></i> support@worldhotels.com
+                    </p>
+                </div>
+            </div>
+            <div class="text-center pt-4 border-top border-secondary">
+                <p class="small text-muted mb-0">&copy; 2026 World Hotels International. All Rights Reserved.<br>Serving Since 1995</p>
+                
+                <p class="small text-muted mb-0" style="line-height: 2;">Aberdeen • Belfast • Birmingham • Bristol • Cardiff • Edinburgh • Glasgow • London • Manchester • Newcastle • Norwich • Nottingham • Oxford • Plymouth • Swansea • Bournemouth • Kent</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (REQUIRED FOR CAROUSEL TO MOVE) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- 
+    BOOKING PAGE
+    - This page displays selected room and booking details
+    - Sends booking data securely to the backend using POST
+-->
+<h2>Confirm Booking</h2>
+
+<p>Hotel: {{ hotel.city }}</p>
+<p>Room Type: {{ room_type }}</p>
+<p>Total Price: £{{ total_price }}</p>
+
+<form method="post">
+    <button type="submit">Confirm Booking</button>
+</form>
+
+{% endblock %}

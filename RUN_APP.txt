@@ -1,0 +1,20 @@
+World Hotels Booking System
+Student ID: 24071133
+
+Application Entry Point:
+- app.py (Flask application)
+- passenger_wsgi.py is used on the student server
+
+Database:
+- MySQL database name: sacstrsx_24071133
+- SQL files included in /database folder
+
+Demo Login:
+
+Admin Username:managershane
+Email: luluu.142235@gmail.com
+Password: admin123
+
+Username:scotthunter2
+Email: sentra3483@gmail.com
+Password: newyork2

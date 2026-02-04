@@ -1,0 +1,310 @@
+/* 1. COLOR VARIABLES & BASICS */
+:root {
+    --primary-green: #1b3a31;  /* Deep Emerald Green (Like Image 4) */
+    --accent-gold: #c5a059;    /* Luxury Gold/Bronze */
+    --light-bg: #fdfdfd;       /* Off-white background */
+    --text-dark: #2c2c2c;
+    --text-muted: #666666;
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: 'Lato', sans-serif; 
+    color: var(--text-dark);
+}
+
+h1, h2, h3, h4, h5, .navbar-brand {
+    font-family: 'Playfair Display', serif; /* Luxury Header Font */
+    letter-spacing: 0.5px;
+}
+
+/*  2. NAVIGATION BAR */
+.navbar {
+    background-color: var(--primary-green) !important;
+    padding: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.8) !important;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--accent-gold) !important;
+}
+
+/* 3. HERO BANNER */
+.hero-banner {
+    /* Large, immersive image like Image 1 & 2 */
+    background: linear-gradient(rgba(27, 58, 49, 0.4), rgba(27, 58, 49, 0.4)), url('../images/banner.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Parallax effect */
+    height: 60vh; /* 60% of screen height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    margin-bottom: -50px; 
+    padding-bottom: 50px;
+}
+
+.hero-banner h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+}
+
+.hero-banner p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* 4. CARDS & CONTAINERS */
+.container {
+    position: relative;
+    z-index: 2; /* it sits above the banner */
+}
+
+.card {
+    border: none;
+    border-radius: 12px; /* Smooth rounded corners  */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08); /* Soft shadow */
+    overflow: hidden;
+    background: white;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Subtle lift on hover */
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    color: var(--primary-green);
+    font-weight: 700;
+}
+
+.card-header.bg-primary {
+    background-color: var(--primary-green) !important;
+    color: var(--accent-gold) !important;
+}
+
+/* 5. FORMS & INPUTS */
+.form-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.form-control, .form-select {
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: #fcfcfc;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 0.2rem rgba(197, 160, 89, 0.2);
+}
+
+/* 6. BUTTONS (The "Gold" Touch) */
+.btn {
+    border-radius: 6px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    border: 1px solid var(--primary-green);
+}
+
+.btn-primary:hover {
+    background-color: #142e26;
+    border-color: #142e26;
+}
+
+.btn-warning, .btn-success {
+    background-color: var(--accent-gold);
+    border: none;
+    color: white;
+}
+
+.btn-warning:hover, .btn-success:hover {
+    background-color: #b08d4a;
+    color: white;
+}
+
+.btn-outline-primary {
+    color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+/* 7. BADGES & TABLES */
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+}
+
+.badge.bg-primary { background-color: var(--primary-green) !important; }
+.badge.bg-success { background-color: var(--accent-gold) !important; color: white; }
+.badge.bg-dark { background-color: #2c2c2c !important; }
+
+/* Dashboard Tables */
+.table thead {
+    background-color: var(--primary-green);
+    color: white;
+    font-family: 'Playfair Display', serif;
+}
+
+.table-world thead {
+    background-color: #1b3a31;
+    color: #ffffff;
+}
+.site-footer {
+    background-color: #1b3a31;
+    color: #ffffff;
+}
+
+.site-footer a {
+    color: #d1e7dd;
+}
+
+.site-footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* 8. RECEIPT LAYOUT */
+.paid-stamp {
+    border: 3px solid var(--primary-green);
+    color: var(--primary-green);
+    font-family: 'Stencil', sans-serif; /* Stamped look */
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transform: rotate(-10deg);
+    display: inline-block;
+    opacity: 0.8;
+}
+
+@media print {
+    .navbar, .hero-banner, footer, .no-print { display: none !important; }
+    .card { box-shadow: none; border: 1px solid #ddd; }
+}
+
+/* 9. FOOTER */
+footer {
+    background-color: var(--primary-green);
+    color: rgba(255,255,255,0.6);
+    padding: 40px 0;
+    margin-top: 60px;
+}
+/* 10. LUXURY CARD STYLES */
+
+.luxury-card {
+    border: none;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.luxury-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.img-wrapper {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.luxury-card:hover .img-wrapper img {
+    transform: scale(1.05); /*zooming on hovering */
+}
+
+/* Green Tag on the image */
+.luxury-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: var(--primary-green); 
+    color: white;
+    padding: 5px 15px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    z-index: 2;
+}
+
+.card-price {
+    color: var(--primary-green);
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+}
+
+.card-price small {
+    font-size: 0.8rem;
+    color: #999;
+    font-weight: 400;
+    font-family: 'Lato', sans-serif;
+}
+
+/* Search Box Floating Effect */
+.form-control, .form-select {
+    padding: 12px;
+}
+
+/*TABLE HEADER TEXT more visible */
+.table thead th {
+    color: #ffffff !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: none;
+}

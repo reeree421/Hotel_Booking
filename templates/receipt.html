@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<style>
+    /* receipt styling */
+    .receipt-box {
+        position: relative; /* for the Stamp */
+        max-width: 900px;
+        margin: auto;
+        padding: 40px;
+        border: 1px solid #eee;
+        box-shadow: 0 0 15px rgba(0,0,0,.15);
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background: #fff;
+        border-radius: 10px;
+    }
+
+    /* Header section */
+    .receipt-header {
+        border-bottom: 2px solid #eee;
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+    }
+
+    /* Table styling */
+    .receipt-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .receipt-table td {
+        padding: 12px;
+        vertical-align: top;
+        border-bottom: 1px solid #eee;
+    }
+
+    .receipt-table .heading td {
+        background: #f8f9fa;
+        border-bottom: 2px solid #ddd;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .receipt-table .total td {
+        border-top: 2px solid #333;
+        font-weight: bold;
+        font-size: 20px;
+        color: #000;
+    }
+
+    /* THE PAID STAMP */
+    .paid-stamp {
+        position: absolute;
+        top: 100px;
+        right: 50px;
+        border: 6px solid #28a745;
+        color: #28a745;
+        font-size: 45px;
+        font-weight: 900;
+        padding: 15px 30px;
+        transform: rotate(-15deg);
+        border-radius: 15px;
+        text-transform: uppercase;
+        opacity: 0.8;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    /* PRINT LOGIC */
+    @media print {
+        .no-print, nav, footer, .btn, .navbar { display: none !important; }
+        .receipt-box { box-shadow: none; border: none; width: 100%; margin: 0; padding: 0; }
+        body { background: white; }
+    }
+</style>
+
+<!-- Top Actions Bar -->
+<div class="container my-4 d-flex justify-content-between no-print">
+    <a href="{{ url_for('user_dashboard') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+    <button onclick="window.print()" class="btn btn-dark">
+        <i class="bi bi-printer"></i> Download / Print Receipt
+    </button>
+</div>
+
+<div class="receipt-box">
+    
+    <!-- Showing stamp only if Paid -->
+    {% if booking.status == 'Paid' %}
+        <div class="paid-stamp">PAID IN FULL</div>
+    {% endif %}
+    <!-- Receipt header -->
+    <div class="receipt-header d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="text-primary fw-bold mb-1">World Hotels</h2>
+            <p class="mb-0 text-muted">Receipt ID: WHRBID{{ booking.id }}</p>
+            <p class="mb-0 text-muted">Issued on: {{ booking.created_at }}</p>
+        </div>
+        <div>
+            <span class="badge {% if booking.status == 'Paid' %}bg-success{% else %}bg-warning text-dark{% endif %} p-2 px-3">
+                {{ booking.status or 'Confirmed' }}
+            </span>
+        </div>
+    </div>
+    <!-- Booking information -->
+    {% if booking %}
+    <table class="receipt-table">
+        <tr class="heading">
+            <td colspan="2">Guest & Property Information</td>
+        </tr>
+        <tr>
+            <td>Hotel Branch</td>
+            <td class="text-end fw-bold">{{ booking.city }}</td>
+        </tr>
+        <tr>
+            <td>Room Details</td>
+            <td class="text-end">{{ booking.type_name }} (Room: {{ booking.room_number }})</td>
+        </tr>
+        <tr>
+            <td>Stay Dates</td>
+            <td class="text-end">{{ booking.check_in }} to {{ booking.check_out }}</td>
+        </tr>
+        <tr>
+            <td>Number of Guests</td>
+            <td class="text-end">{{ booking.guest_count }}</td>
+        </tr>
+
+        <tr class="heading">
+            <td colspan="2">Payment Summary</td>
+        </tr>
+        <tr>
+            <td>Base Price (Room Charge)</td>
+            <td class="text-end">£{{ "%.2f"|format(booking.total_price or 0) }}</td>
+        </tr>
+        <tr>
+            <td>Discount Applied</td>
+            <td class="text-end text-success">- £{{ "%.2f"|format(booking.discount_amount or 0) }}</td>
+        </tr>
+        <tr class="total">
+            <td>Grand Total Payable</td>
+            <td class="text-end">
+                £{{ "%.2f"|format((booking.total_price or 0) - (booking.discount_amount or 0)) }}
+            </td>
+        </tr>
+    </table>
+
+    <!-- Payment Action -->
+    <div class="text-center no-print mt-4">
+        {% if booking.status != 'Paid' and booking.status != 'Cancelled' %}
+            <div class="alert alert-info">
+                Your booking is held. Please complete payment to guarantee your room.
+            </div>
+            <a href="{{ url_for('checkout', id=booking.id) }}" class="btn btn-primary btn-lg px-5">
+                Proceed to Secure Payment
+            </a>
+        {% elif booking.status == 'Paid' %}
+            <div class="alert alert-success">
+                <i class="bi bi-check-circle-fill"></i> This booking is fully paid. We look forward to seeing you!
+            </div>
+        {% endif %}
+    </div>
+
+    {% else %}
+        <div class="alert alert-danger text-center">
+            <h4>Booking Not Found</h4>
+            <p>We couldn't locate this record. Please contact support.</p>
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-5 text-muted small border-top pt-3">
+        Thank you for choosing World Hotels. We wish you a pleasant experience with us.
+        <br>
+        <small>World Hotels International • London • UK</small>
+    </div>
+</div>
+{% endblock %}

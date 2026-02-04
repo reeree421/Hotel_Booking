@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-header bg-info text-white text-center">
+                <h4 class="mb-0 fw-bold" style="font-family: 'Playfair Display', serif;">Change Email</h4>
+            </div>
+            <div class="card-body p-4">
+
+                {% if msg %}
+                    <div class="alert alert-{{ 'success' if success else 'danger' }}">
+                        {{ msg }}
+                    </div>
+                {% endif %}
+
+                <form method="POST">
+                    <!-- Email Update -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">New Email Address</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter your new email" value="{{ session.email }}" required>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-dark btn-lg">Update Email</button>
+                    </div>
+                </form>
+
+                <hr class="my-4">
+
+                <div class="text-center">
+                    <a href="{{ url_for('user_dashboard') }}" class="text-decoration-none text-muted">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

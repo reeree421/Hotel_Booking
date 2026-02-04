@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block main %}
+
+<!-- Page title -->
+<h2>Room Status Management</h2>
+
+<!-- Table showing room availability per hotel -->
+<table class="table table-bordered">
+
+    <!-- Table headings -->
+    <tr>
+        <th>City</th>
+        <th>Room</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Change Status</th>
+    </tr>
+
+    <!-- Loop through all rooms -->
+    {% for r in rooms %}
+    <tr>
+        <td>{{ r.city }}</td>
+        <td>{{ r.room_number }}</td>
+        <td>{{ r.type_name }}</td>
+
+        <!-- Status badge (green = available, red = booked) -->
+        <td>
+            <span class="badge {% if r.status == 'Available' %}bg-success{% else %}bg-danger{% endif %}">
+                {{ r.status }}
+            </span>
+        </td>
+
+        <!-- Toggle room availability -->
+        <td>
+            <a href="/admin/toggle_room/{{ r.id }}"
+               class="btn btn-sm btn-outline-dark">
+                Switch to {% if r.status == 'Available' %}Booked{% else %}Available{% endif %}
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+

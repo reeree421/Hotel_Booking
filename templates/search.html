@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Available Hotels</h2>
+
+{% for hotel in hotels %}
+<div>
+    <h3>{{ hotel.city }}</h3>
+    <p>Price per night: £{{ hotel.price }}</p>
+    <a href="/book/{{ hotel.hotel_id }}">Book Now</a>
+</div>
+<hr>
+{% endfor %}
+
+{% endblock %}
