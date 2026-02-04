@@ -14,3 +14,4 @@ def getConnection():
     except mysql.connector.Error as e:
         print(f"Error connecting to DB: {e}", file=sys.stderr)
         return None
+
