@@ -1,13 +1,15 @@
-
 -- Admin User
+-- Default admin account for system management
 INSERT INTO users (username, email, password, role)
 VALUES ('admin', 'admin@wh.com', 'admin123', 'admin');
 
 -- Customer User
+-- Gives a Sample customer account for testing
 INSERT INTO users (username, email, password)
 VALUES ('user', 'user@wh.com', 'user123');
 
 -- Hotels
+-- hotel data with seasonal pricing
 INSERT INTO hotels (city, total_capacity, peak_rate, off_peak_rate) VALUES 
 ('Aberdeen', 90, 140, 70),
 ('Belfast', 80, 130, 70),
@@ -19,22 +21,22 @@ INSERT INTO hotels (city, total_capacity, peak_rate, off_peak_rate) VALUES
 ('London', 160, 200, 100),
 ('Manchester', 150, 180, 90);
 
--- Rooms (example for first hotel)
+-- Rooms like example for first hotel
 INSERT INTO rooms (hotel_id, room_number, type_name) VALUES
 (1, '101', 'Standard'),
 (1, '102', 'Double'),
 (1, '103', 'Family');
 
--- Currencies
+-- Currencies that are supported
 INSERT INTO currencies (code, rate_to_gbp) VALUES
 ('GBP', 1.0),
 ('EUR', 1.17),
 ('USD', 1.27);
 
--- Exchange Rates
+-- Exchange Rates needed for conversion rate
 INSERT INTO exchange_rates (currency_code, rate_to_gbp) VALUES
 ('USD', 1.25),
 ('EUR', 1.18);
 
--- Optional: promote other users to admin if needed
+-- promoting other users to admin if required
 UPDATE users SET role='admin' WHERE username='managershane1';
