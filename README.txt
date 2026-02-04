@@ -1,9 +1,7 @@
-# World Hotels Booking System
+## World Hotels Booking System
 
 **Student Name:** Reewani Guruwacharya  
 **Student ID:** 24071133
-
----
 
 ## Project Overview
 
