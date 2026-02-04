@@ -1,5 +1,4 @@
 World Hotels Booking System
-Student ID: 24071133
 
 Application Entry Point:
 - app.py (Flask application)
